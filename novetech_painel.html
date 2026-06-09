@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saúde Digital UBS | Novetech</title>
+<script type="application/json" id="jD">{}</script>
+<script type="application/json" id="jU">[]</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{
+  --bg:#ffffff;--card:#f4f6fb;--bdr:#cdd5e8;
+  --text:#1a1a2e;--muted:#5a6a8a;--w:#1a2e6b;
+  --em:#1a2e6b;--sky:#2a4a9b;--cy:#3a6abf;
+  --am:#f59e0b;--rs:#e53935;--vl:#3a4e9b;--li:#1a2e6b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{color:var(--text);background:#fff;font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;
+  background:var(--bg) center/cover fixed no-repeat;}
+body::before{content:'';position:fixed;inset:0;background:#ffffff;z-index:0;pointer-events:none}
+.hd,.nv,.fb,.sb,.page{position:relative;z-index:1}
+.hd{background:#1a2e6b;;
+  border-bottom:1px solid #e2e6ea;border-left:4px solid var(--em);
+  padding:10px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.hd img{height:38px;flex-shrink:0}
+.hd-c{text-align:center}
+.hd-c h1{font-size:1rem;font-weight:700;color:#ffffff}
+.hd-c p{font-size:.67rem;color:var(--em);margin-top:1px}
+.hd-r{font-size:.67rem;color:var(--muted);text-align:right;white-space:nowrap}
+.hd-r strong{display:block;color:var(--cy);font-size:.8rem}
+.nv{background:#1a2e6b;;
+  border-bottom:1px solid #cdd5e8;
+  display:flex;overflow-x:auto;padding:0 16px}
+.nv button{background:none;border:1px solid #dee2e6;border-radius:20px;color:var(--muted);margin:0 3px;padding:10px 14px;
+  font-size:.73rem;cursor:pointer;border-bottom:2px solid transparent;
+  white-space:nowrap;transition:all .15s;font-weight:500}
+.nv button:hover{color:var(--text)}
+.nv button.active{color:#ffffff;background:#1a2e6b;border-color:#1a2e6b;font-weight:700;border-radius:20px}
+.fb{background:#f0f3fb;;
+  border-bottom:1px solid #e2e6ea;
+  padding:7px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fb label{font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.fb select,.fb-sel{
+  background:#ffffff;border:1px solid var(--bdr);color:var(--text);
+  padding:5px 22px 5px 9px;border-radius:5px;font-size:.73rem;cursor:pointer;
+  appearance:none;min-width:130px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%231a2e6b'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 7px center;
+  background-color:#fffffffff}
+.fb select:focus,.fb-sel:focus{outline:none;border-color:var(--em)}
+.fb select:disabled{opacity:.3}
+.fb-btn{background:rgba(26,46,107,.08);border:1px solid #1a2e6b;color:var(--em);
+  padding:5px 12px;border-radius:5px;font-size:.71rem;cursor:pointer;font-weight:600}
+.fsc{font-size:.67rem;color:var(--em);padding:3px 10px;
+  background:rgba(26,46,107,.04);border-radius:10px;border:1px solid #cdd5e8}
+.sb{background:rgba(26,46,107,.02);border-bottom:1px solid #e2e6ea;
+  padding:4px 20px;font-size:.67rem;color:var(--muted);display:flex;gap:6px;align-items:center}
+.sb strong{color:var(--em)}
+.page{display:none;padding:16px 20px;max-width:1500px;margin:0 auto}
+.page.active{display:block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-bottom:13px}
+.g1{margin-bottom:13px}
+.kr{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-bottom:13px}
+.kpi{background:#ffffff;border:1px solid var(--bdr);border-radius:8px;
+  padding:12px 14px;position:relative;overflow:hidden;transition:transform .12s}
+.kpi:hover{transform:translateY(-1px)}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.k-em::after{background:linear-gradient(90deg,#10b981,#34d399)}
+.k-sky::after{background:linear-gradient(90deg,#0ea5e9,#38bdf8)}
+.k-cy::after{background:linear-gradient(90deg,#06b6d4,#67e8f9)}
+.k-am::after{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
+.k-rs::after{background:linear-gradient(90deg,#f43f5e,#fb7185)}
+.k-vl::after{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.k-li::after{background:linear-gradient(90deg,#84cc16,#d9f99d)}
+.kl{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.kv{font-size:1.8rem;font-weight:800;color:#ffffff;margin:3px 0 2px;line-height:1}
+.ks{font-size:.61rem;color:var(--muted)}
+.note-icon{display:inline-flex;align-items:center;justify-content:center;
+  width:14px;height:14px;background:rgba(14,165,233,.2);color:#38bdf8;
+  border-radius:50%;font-size:.6rem;margin-left:4px;cursor:help;vertical-align:middle}
+.cc{background:#ffffff;border:1px solid var(--bdr);border-radius:8px;
+  padding:14px;transition:border-color .2s}
+.cc:hover{border-color:rgba(16,185,129,.2)}
+.ct{font-size:.7rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.cs{font-size:.61rem;color:var(--muted);margin-bottom:10px}
+.fn{display:flex;flex-direction:column;gap:5px}
+.fi{display:flex;align-items:flex-start;gap:10px;margin-bottom:2px}
+.fl{font-size:.65rem;color:var(--muted);text-align:right;flex-shrink:0;width:220px}
+.fb2{flex:1;background:rgba(255,255,255,.04);border-radius:3px;height:44px;overflow:hidden}
+.fb3{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;gap:6px}
+.fp{font-size:.72rem;font-weight:700;color:#ffffff}
+.fn2{font-size:.6rem;color:rgba(255,255,255,.45);margin-left:4px}
+.dt{width:100%;border-collapse:collapse;font-size:.73rem}
+.dt th{background:rgba(255,255,255,.03);color:var(--muted);padding:7px 9px;text-align:left;
+  font-size:.61rem;text-transform:uppercase;letter-spacing:.4px;
+  border-bottom:1px solid rgba(14,42,61,.9);position:sticky;top:0;z-index:2;cursor:help;line-height:1.3}
+.dt td{padding:6px 9px;border-bottom:1px solid rgba(255,255,255,.02);vertical-align:middle}
+.dt tr:hover td{background:rgba(26,46,107,.03)}
+.dt-w{max-height:450px;overflow-y:auto;border-radius:6px;border:1px solid var(--bdr)}
+.pill{display:inline-block;padding:2px 7px;border-radius:8px;font-size:.59rem;font-weight:700}
+.pg{background:rgba(16,185,129,.15);color:#10b981}
+.po{background:rgba(245,158,11,.15);color:#f59e0b}
+.pr{background:rgba(244,63,94,.15);color:#f43f5e}
+.pb{background:rgba(14,165,233,.15);color:#38bdf8}
+.pv{background:rgba(124,58,237,.15);color:#a78bfa}
+.pw{background:rgba(255,255,255,.06);border-radius:2px;height:4px;overflow:hidden;margin-top:2px}
+.pw2{height:100%;border-radius:2px}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:13px}
+.ic{background:#ffffff;border:1px solid var(--bdr);border-radius:8px;padding:11px}
+.ic.crit{border-color:rgba(245,158,11,.3)}
+.ic.isol{border-color:rgba(244,63,94,.25)}
+.badge-w{font-size:.57rem;background:rgba(245,158,11,.14);color:#f59e0b;border-radius:3px;padding:1px 5px;margin-top:3px;display:inline-block}
+.badge-r{font-size:.57rem;background:rgba(244,63,94,.14);color:#f43f5e;border-radius:3px;padding:1px 5px;margin-top:3px;display:inline-block}
+.alert{border-radius:7px;padding:8px 13px;font-size:.71rem;margin-bottom:12px;border:1px solid;line-height:1.5}
+.a-b{background:rgba(14,165,233,.07);border-color:rgba(14,165,233,.2);color:#7dd3fc}
+.a-r{background:rgba(244,63,94,.07);border-color:rgba(244,63,94,.2);color:#fda4af}
+.obox{background:linear-gradient(135deg,rgba(16,185,129,.05),rgba(14,165,233,.03));
+  border:1px solid rgba(16,185,129,.16);border-radius:9px;padding:15px;margin-bottom:13px}
+.obox h3{font-size:.74rem;font-weight:700;color:var(--em);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.ms{background:#ffffff;border:1px solid var(--bdr);border-radius:8px;padding:14px;margin-bottom:11px}
+.ms h3{color:var(--em);font-size:.74rem;margin-bottom:9px}
+.mt{width:100%;border-collapse:collapse;font-size:.7rem}
+.mt th{background:rgba(255,255,255,.03);padding:6px 8px;text-align:left;color:var(--muted);font-size:.61rem;text-transform:uppercase}
+.mt td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
+code{font-family:monospace;background:rgba(26,46,107,.08);padding:1px 4px;border-radius:3px;font-size:.67rem;color:var(--em)}
+.bi{display:inline-block;font-size:.56rem;border-radius:3px;padding:1px 4px;margin:1px;font-weight:600}
+.bi-c{background:rgba(245,158,11,.18);color:#f59e0b}
+.bi-x{background:rgba(14,165,233,.14);color:#38bdf8}
+.bi-n{background:rgba(244,63,94,.18);color:#f43f5e}
+#drill-ph{text-align:center;padding:55px;color:var(--muted)}
+@media(max-width:768px){.g2,.g3{grid-template-columns:1fr}.fl{width:110px}.page{padding:10px}}
+</style>
+</head>
+<body>
+<div class="hd">
+  <img src="data:image/png;base64,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" style="height:36px;object-fit:contain">
+  <div class="hd-c">
+    <h1>Saúde Digital nas UBS — Censo Nacional 2024</h1>
+    <p>Informatização · Prontuário Eletrônico · Interoperabilidade · Prontidão Inteligente · APS/MS</p>
+  </div>
+  <div class="hd-r"><strong>n = 44.938 UBS</strong>5.570 municípios · 27 UFs · 5 Regiões</div>
+</div>
+<nav class="nv">
+  <button class="active" onclick="showTab('p-opp',this)">🎯 Prioridades</button>
+</nav>
+<div class="fb">
+  <label>Região</label>
+  <select id="f-reg" onchange="onReg()"><option value="">Todas as Regiões</option></select>
+  <label>UF</label>
+  <select id="f-uf" onchange="onUF()" disabled><option value="">Todos os Estados</option></select>
+  <label>Município</label>
+  <select id="f-mun" onchange="onMun()" disabled><option value="">Todos os Municípios</option></select>
+  <button class="fb-btn" onclick="resetF()">✕ Limpar</button>
+  <div class="fsc" id="fsc">🌎 44.938 UBS · 5.570 municípios</div>
+</div>
+<div class="sb"><span>Escopo:</span><strong id="scope-txt">Brasil completo</strong></div>
+
+<div id="p-nac" class="page" style="display:none!important">
+  <div class="kr" id="kpi-nac"></div>
+  <div class="g2">
+    <div class="cc"><div class="ct">% PEP por Região</div><div class="cs">% e N dentro das barras · filtra por escopo</div><canvas id="c-pep-reg" height="220"></canvas></div>
+    <div class="cc"><div class="ct">Qualidade de Internet</div><div class="cs">% e N dentro das fatias</div><canvas id="c-inet" height="220"></canvas></div>
+  </div>
+  <div class="g2">
+    <div class="cc"><div class="ct">🔌 Gap de Interoperabilidade — Base: UBS com PEP</div><div class="cs">% calculado sobre as UBS com PEP — a base relevante para venda de integração</div><div class="fn" id="fn-nac" style="margin-top:10px"></div></div>
+    <div class="cc"><div class="ct">Software de PEP</div><div class="cs">Entre UBS com PEP=Sim · base nacional</div><canvas id="c-soft" height="220"></canvas></div>
+  </div>
+</div>
+
+<div id="p-rank" class="page" style="display:none!important">
+  <div class="g2">
+    <div class="cc">
+      <div class="ct">% PEP por UF <span class="note-icon" title="V.37=Sim. % de UBS com Prontuário Eletrônico do Paciente implantado. Filtra conforme escopo selecionado.">ℹ</span></div>
+      <canvas id="c-uf-pep" height="560" style="max-height:560px"></canvas>
+    </div>
+    <div class="cc">
+      <div class="ct">Índice de Interoperabilidade por UF <span class="note-icon" title="Soma de conexões com 10 pontos de atenção (V.37.4.1–10), cada um vale 10 pts. Máximo=100. Base: UBS com PEP. Pontos críticos: UPA, Urgência, Espec.Pública, Hospital Público e Conv.">ℹ</span></div>
+      <div class="cs">0–100 · cada ponto de atenção = 10pts · base: UBS com PEP</div>
+      <canvas id="c-uf-ii" height="560" style="max-height:560px"></canvas>
+    </div>
+  </div>
+</div>
+
+<div id="p-interop" class="page" style="display:none!important">
+  <div class="alert a-r">⚠️ <strong>Gap Crítico:</strong> apenas <strong id="crit-pct">—</strong> das UBS com PEP conectam a ≥1 ponto crítico (UPA, Urgência, Especialidades, Hospital). São <strong id="crit-nsic">26.819</strong> UBS sem continuidade digital do cuidado — o mercado endereçável da Alicerce.</div>
+  <div class="ig" id="ig"></div>
+  <div class="g2">
+    <div class="cc">
+      <div class="ct">IIRAS por Escopo Selecionado <span class="note-icon" title="Barras mostram % Interop Crítica e Índice Interop (0-100) agrupados conforme filtro: por região (sem filtro), por UF (filtro de região), ou por município (filtro de UF). Filtra em tempo real.">ℹ</span></div>
+      <div class="cs">Índice de Interoperabilidade da Rede de Atenção à Saúde · 6 pontos: UBS, UPA, Urgência, Espec.Pub., Hosp.Pub., Hosp.Conv.</div>
+      <canvas id="c-it-scope" height="300"></canvas>
+    </div>
+    <div class="cc">
+      <div class="ct">Radar de Compartilhamento</div>
+      <div class="cs">Níveis de atenção · base nacional</div>
+      <canvas id="c-radar-it" height="300"></canvas>
+    </div>
+  </div>
+</div>
+
+<div id="p-dig" class="page" style="display:none!important">
+  <div class="kr" style="grid-template-columns:repeat(7,1fr)" id="kpi-dig"></div>
+  <div class="alert a-b">📖 <strong>Briefing UBS Inteligentes (SAPS/MS 2025):</strong> DIGITAL = E1×0,6 + E2×0,4. INTELIGENTE = média E1–E5. Passe o cursor nos ℹ para ver a composição de cada escore.</div>
+  <div class="g2">
+    <div class="cc"><div class="ct">Radar E1–E5 por Região</div><canvas id="c-radar-dim" height="300"></canvas></div>
+    <div class="cc"><div class="ct">Dispersão DIGITAL × INTELIGENTE</div><div class="cs">2.000 UBS amostradas · diagonal = y=x</div><canvas id="c-scatter" height="300"></canvas></div>
+  </div>
+  <div class="g2">
+    <div class="cc">
+      <div class="ct">Canais de Agendamento <span class="note-icon" title="V.103.*. Base: total de UBS. Via ACS (V.103.7) é canal comunitário presencial, não-digital. Meu SUS Digital (V.103.5) = plataforma digital oficial.">ℹ</span></div>
+      <div class="cs">% UBS · base total · cor cinza = não-digital</div>
+      <canvas id="c-agend" height="260"></canvas>
+    </div>
+    <div class="cc">
+      <div class="ct">Modalidades de Telessaúde <span class="note-icon" title="V.36.1 a V.36.10. Base: total de UBS. V.36.12=Sim significa NÃO realiza nenhuma atividade — aqui mostramos as que realizam. 39% = V.36.12 NÃO é Sim.">ℹ</span></div>
+      <div class="cs">% UBS com cada modalidade · base total UBS · 39% realiza ao menos uma</div>
+      <canvas id="c-tele" height="260"></canvas>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="cc">
+      <div class="ct">Plataformas de Teleconsultoria <span class="note-icon" title="V.36.1.1 a V.36.1.8. Base CONDICIONAL: apenas UBS com V.36.1=Sim (n=9.391 que realizam teleconsultoria). Percentual calculado sobre essa base, não sobre total de UBS.">ℹ</span></div>
+      <div class="cs">Base: V.36.1=Sim · n=9.391 UBS com teleconsultoria</div>
+      <canvas id="c-plat" height="240"></canvas>
+    </div>
+    <div class="cc">
+      <div class="ct">Uso do PEP por Profissional <span class="note-icon" title="V.37.1.1 a V.37.1.6. Base CONDICIONAL: apenas UBS com V.37=Sim (n=39.239 com PEP instalado). Pergunta: qual profissional utiliza o PEP nesta UBS?">ℹ</span></div>
+      <div class="cs">Base: V.37=Sim · n=39.239 UBS com PEP</div>
+      <canvas id="c-prof" height="240"></canvas>
+    </div>
+  </div>
+</div>
+
+<div id="p-comp" class="page" style="display:none!important">
+  <div class="fb" style="background:rgba(7,18,30,.8);border:1px solid var(--bdr);border-radius:7px;margin-bottom:13px">
+    <label>Métrica</label>
+    <select id="m-sel" onchange="updComp()">
+      <option value="pct_pep">% PEP</option>
+      <option value="pct_inet">% Internet Adequada</option>
+      <option value="iiras">IIRAS — Índice de Interoperabilidade da RAS</option>
+    </select>
+    <label>Agrupar por</label>
+    <select id="g-sel" onchange="updComp()">
+      <option value="reg">Região</option>
+      <option value="uf">UF</option>
+    </select>
+  </div>
+  <div class="g2">
+    <div class="cc"><div class="ct" id="comp-ttl">Comparativo</div><canvas id="c-comp" height="300"></canvas></div>
+    <div class="cc"><div class="ct">PEP × Interop por Região <span class="note-icon" title="Bolha: eixo X = % PEP, eixo Y = Índice Interop, tamanho = nº UBS. Municípios no canto superior direito têm maior infraestrutura E maior interoperabilidade.">ℹ</span></div><canvas id="c-bub-reg" height="300"></canvas></div>
+  </div>
+  <div class="cc g1"><div class="ct">Tabela Resumo</div><div class="dt-w" style="margin-top:8px"><table class="dt" id="t-comp"></table></div></div>
+</div>
+
+<div id="p-drill" class="page" style="display:none!important">
+  <div class="alert a-b">🔍 Selecione <strong>Região → UF → Município</strong> nos filtros acima para ver cada UBS individualmente.</div>
+  <div id="drill-ph"><div style="font-size:2.5rem">🏥</div><div style="margin-top:8px;font-size:.86rem">Selecione um <strong style="color:var(--em)">município</strong> para ver o detalhe por UBS</div></div>
+  <div id="drill-ct" style="display:none">
+    <div class="g2" style="margin-bottom:12px">
+      <div class="cc" id="drill-kpis"></div>
+      <div class="cc"><div class="ct">Interop por Ponto de Atenção</div><canvas id="c-drill-it" height="210"></canvas></div>
+    </div>
+    <div class="cc"><div class="ct" id="drill-ttl">UBS</div><div class="dt-w" style="margin-top:8px"><table class="dt" id="t-ubs"></table></div></div>
+  </div>
+</div>
+
+<div id="p-opp" class="page active">
+  
+  <div class="kr" style="grid-template-columns:repeat(6,1fr)" id="opp-kpis"></div>
+  <div class="g2">
+    <div class="cc"><div class="ct">🔌 UBS com PEP prontas para integrar à RAS</div><div class="fn" id="fn-opp" style="margin-top:10px"></div></div>
+    <div class="cc"><div class="ct">Score × UBS sem Interop</div><div class="cs">X=Score de Oportunidade · Y=UBS prontas para integrar · Bolha=volume de UBS · Cor=Prioridade</div><canvas id="c-bub-opp" height="255"></canvas></div>
+  </div>
+  <div class="cc g1">
+    <div class="ct">🏆 Ranking de Municípios</div>
+    <div style="font-size:.69rem;color:var(--muted);margin:5px 0 9px">Mín. 5 UBS com PEP · Score composto: gap de interoperabilidade(47%) + prontidão digital(29%) + impacto no estado(24%) + software privado(15%)</div>
+    <div style="display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap;align-items:center">
+      <select id="opp-reg" onchange="renderOpp()" class="fb-sel"><option value="">🌎 Todas as Regiões</option><option>NORTE</option><option>NORDESTE</option><option>CENTRO-OESTE</option><option>SUDESTE</option><option>SUL</option></select>
+      <select id="opp-tier" onchange="renderOpp()" class="fb-sel"><option value="">🎯 Todas as Prioridades</option><option value="Alta Probabilidade">Alta Probabilidade</option><option value="Média Probabilidade">Média Probabilidade</option><option value="Necessidade de Apoio à Informatização">Necessidade de Apoio à Informatização</option></select>
+
+      <span id="opp-cnt" style="font-size:.68rem;color:var(--muted)"></span>
+    </div>
+    <div class="dt-w"><table class="dt">
+      <thead><tr>
+        <th>#</th><th>Município / UF</th>
+        <th title="Score 0-100: Gap IIRAS (45%) + Prontidão Digital (30%) + Impacto no Estado (25%)">Score ▾ ℹ</th>
+        <th>Prioridade</th>
+        <th title="UBS com PEP instalado">UBS PEP</th>
+        <th title="UBS com PEP que NÃO conectam a urgência/especialidades/hospital">⚡ Sem Interop ℹ</th>
+        <th title="% que já conectam >= 1 ponto crítico">Interop Atual</th>
+        <th>Internet</th>
+      </tr></thead>
+      <tbody id="t-opp-body"></tbody>
+    </table></div>
+  </div>
+  <div class="g2">
+    <div class="cc"><div class="ct">Prioridades por Região</div><canvas id="c-tier-reg" height="250"></canvas></div>
+    <div class="cc"><div class="ct">Gap de Interop por Ponto <span class="note-icon" title="% UBS com PEP que NÃO conectam a cada ponto de atenção. ⚠️ = ponto crítico para continuidade do cuidado. Quanto maior o gap, maior a oportunidade comercial.">ℹ</span></div><canvas id="c-gap-pts" height="250"></canvas></div>
+  </div>
+
+<div class="obox">
+    <h3>📐 Como os municípios foram priorizados</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:.72rem;color:var(--muted);line-height:1.75">
+      <div>
+        <strong style="color:var(--w)">Score de Oportunidade (0–100)</strong><br>
+        <span style="color:var(--muted)">Quanto maior, mais prioritária a abordagem. Calculado para os 5.570 municípios com UBS.</span><br><br>
+        <div style="background:rgba(255,255,255,.04);border-radius:6px;padding:9px 10px;font-size:.68rem;margin-bottom:10px">
+          <div style="color:var(--text);font-weight:600;margin-bottom:6px">Fórmula do Score:</div>
+          <div><span style="color:var(--am);font-weight:700">45%</span> — <strong style="color:var(--text)">Gap de Interoperabilidade</strong></div>
+          <div style="color:var(--muted);font-size:.62rem;margin:2px 0 4px 12px">100% menos o IIRAS médio do município<br>Variáveis: V.37.4.1 + V.37.4.3 + V.37.4.4 + V.37.4.5 + V.37.4.7 + V.37.4.8 · Base: V.37=Sim</div>
+          <div><span style="color:var(--cy);font-weight:700">30%</span> — <strong style="color:var(--text)">Prontidão Digital</strong></div>
+          <div style="color:var(--muted);font-size:.62rem;margin:2px 0 4px 12px">Escore DIGITAL = E1×0,6 + E2×0,4 · Infraestrutura + Acesso Digital<br>E1: V.33 + V.35.* + V.37 + V.37.1.* + V.37.3 · E2: V.102 + V.103.3/4/5/6</div>
+          <div><span style="color:var(--em);font-weight:700">25%</span> — <strong style="color:var(--text)">Impacto no Estado</strong></div>
+          <div style="color:var(--muted);font-size:.62rem;margin:2px 0 4px 12px">Percentil de UBS sem interoperabilidade dentro da própria UF<br>Variável: n_sem_ic por município / ranking dentro do estado</div>
+        </div>
+
+      </div>
+      <div>
+        <strong style="color:var(--w)">Como cada prioridade é calculada:</strong><br><br>
+        <div style="background:rgba(244,63,94,.08);border-left:3px solid #f43f5e;padding:8px 10px;border-radius:4px;margin-bottom:8px">
+          <span style="color:#f43f5e;font-weight:700">Alta Probabilidade</span>
+          <div style="font-size:.67rem;margin-top:4px;line-height:1.6">
+            <strong style="color:var(--text)">Critério:</strong> Score ≥ 65 <em>ou</em> V.37.4.11=Sim (declara não compartilhar nada)<br>
+            <strong style="color:#f43f5e">4.116 municípios · 25.261 UBS sem interoperabilidade</strong><br>
+            Score médio: 72,6 · Média de 7,3 UBS com PEP
+          </div>
+        </div>
+        <div style="background:rgba(245,158,11,.08);border-left:3px solid #f59e0b;padding:8px 10px;border-radius:4px;margin-bottom:8px">
+          <span style="color:#f59e0b;font-weight:700">Média Probabilidade</span>
+          <div style="font-size:.67rem;margin-top:4px;line-height:1.6">
+            <strong style="color:var(--text)">Critério:</strong> Score 50–65 (sem V.37.4.11)<br>
+            <strong style="color:#f59e0b">1.029 municípios · 1.482 UBS sem interoperabilidade</strong><br>
+            Score médio: 57,7 · Média de 4,4 UBS com PEP
+          </div>
+        </div>
+        <div style="background:rgba(14,165,233,.08);border-left:3px solid #0ea5e9;padding:8px 10px;border-radius:4px;margin-bottom:8px">
+          <span style="color:#0ea5e9;font-weight:700">Necessidade de Apoio à Informatização</span>
+          <div style="font-size:.67rem;margin-top:4px;line-height:1.6">
+            <strong style="color:var(--text)">Critério:</strong> Score 35–50 — infraestrutura digital ainda limitada<br>
+            <strong style="color:#0ea5e9">404 municípios · 76 UBS sem interoperabilidade</strong><br>
+            Score médio: 44,8 · Média de 10,5 UBS com PEP
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="p-metod" class="page" style="display:none!important">
+  <div class="ms"><h3>📋 Fonte de Dados</h3>
+    <p style="font-size:.72rem;color:var(--muted);line-height:1.8"><strong>Censo Nacional das UBS do SUS 2024</strong> — SAPS/MS · <strong>44.938 UBS</strong> (Permanece_Banco=SIM) · 1.118 variáveis · <strong>5.570 municípios</strong> agrupados por CO_MUNICIPIO_IBGE · 27 UFs · 5 regiões. Dado autorreferido pelo gestor municipal.</p>
+  </div>
+
+  <div class="ms"><h3>⚠️ Natureza do Dado</h3>
+    <p style="font-size:.72rem;color:var(--muted);line-height:1.8">Todas as variáveis são <strong>autorreferidas</strong>. O que foi declarado pode não refletir uso clínico efetivo. Uma UBS pode declarar que compartilha prontuário com determinado serviço porque o sistema tecnicamente permite, sem que isso ocorra na prática cotidiana.</p>
+  </div>
+
+  <div class="ms"><h3>📐 Condicionais e Bases</h3>
+    <table class="mt"><tr><th>Variável</th><th>Base correta</th><th>Motivo</th></tr>
+      <tr><td><code>V.37.1.*</code> profissionais</td><td>V.37=Sim (n=39.239)</td><td>Só com PEP instalado</td></tr>
+      <tr><td><code>V.37.4.*</code> interop</td><td>V.37=Sim (n=39.239)</td><td>Só faz sentido com PEP</td></tr>
+      <tr><td><code>V.36.1.*</code> plataformas</td><td>V.36.1=Sim (n=9.391)</td><td>Só com teleconsultoria ativa</td></tr>
+      <tr><td><code>V.36.12=Sim</code></td><td>Total UBS</td><td>NÃO realiza telessaúde — negação</td></tr>
+      <tr><td><code>V.103.7</code> Via ACS</td><td>Total UBS</td><td>Canal presencial — excluído do E2 (Acesso Digital)</td></tr>
+    </table>
+  </div>
+
+  <div class="ms"><h3>🔗 IIRAS — Índice de Interoperabilidade da Rede de Atenção à Saúde</h3>
+    <p style="font-size:.7rem;color:var(--muted);margin-bottom:8px"><strong>IIRAS = pontos conectados / 6</strong> · Base: V.37=Sim · Escala: 0% a 100% · Nacional médio: 22,8%</p>
+    <table class="mt"><tr><th>Variável</th><th>Ponto de Atenção</th><th>Papel na RAS</th></tr>
+      <tr><td><code>V.37.4.1</code></td><td>Outras UBS</td><td>Coordenação horizontal na APS</td></tr>
+      <tr><td><code>V.37.4.3</code></td><td>UPA</td><td>Urgência móvel</td></tr>
+      <tr><td><code>V.37.4.4</code></td><td>Urgência/PS</td><td>Urgência fixa</td></tr>
+      <tr><td><code>V.37.4.5</code></td><td>Especialidades Públicas</td><td>Atenção especializada eletiva</td></tr>
+      <tr><td><code>V.37.4.7</code></td><td>Hospital Público</td><td>Internação e alta complexidade</td></tr>
+      <tr><td><code>V.37.4.8</code></td><td>Hospital Conveniado</td><td>Rede contratada</td></tr>
+      <tr><td><code>V.37.4.11</code></td><td>Não compartilha</td><td>Ausência total declarada → Alta Probabilidade automático</td></tr>
+    </table>
+    <p style="font-size:.7rem;color:var(--muted);margin-top:8px;line-height:1.6"><strong>Limitação:</strong> denominador fixo em 6. Municípios sem UPA ou hospital no território recebem IIRAS menor por ausência de oferta, não por falta de integração. Cruzamento com CNES corrigiria essa distorção.</p>
+  </div>
+
+  <div class="ms"><h3>🧠 Escores de Prontidão Digital E1–E5 — Briefing UBS Inteligentes SAPS/MS 2025</h3>
+    <p style="font-size:.7rem;color:var(--muted);margin-bottom:8px"><strong>DIGITAL</strong> = E1×0,6 + E2×0,4 &nbsp;·&nbsp; <strong>INTELIGENTE</strong> = média E1–E5</p>
+    <table class="mt">
+      <tr><th>Escore</th><th>Dimensão</th><th>Variáveis do Censo</th><th>Limitação principal</th></tr>
+      <tr>
+        <td><strong style="color:var(--em)">E1 — 74,0</strong></td>
+        <td>Infraestrutura Digital</td>
+        <td><code>V.33</code> internet · <code>V.35.*</code> equipamentos · <code>V.37</code> PEP · <code>V.37.1.*</code> uso por profissional · <code>V.37.3</code> treinamento</td>
+        <td>Internet "adequada" é autorreferida sem critério técnico</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--am)">E2 — 28,2</strong></td>
+        <td>Acesso Digital</td>
+        <td><code>V.102</code> hora marcada · <code>V.103.3</code> WhatsApp · <code>V.103.4</code> site · <code>V.103.5</code> Meu SUS Digital · <code>V.103.6</code> app próprio</td>
+        <td>V.103.7 (Via ACS) excluído — canal presencial, não digital</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--rs)">E3 — 26,4</strong></td>
+        <td>Coordenação em Rede</td>
+        <td>IIRAS (V.37.4.1/.3/.4/.5/.7/.8) · <code>V.36.*</code> telessaúde · <code>V.107</code> frequência de referência · <code>V.108</code> contrarreferência</td>
+        <td>V.107/V.108 medem prática clínica autorreferida, não integração técnica</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--li)">E4 — 80,3</strong></td>
+        <td>Longitudinalidade</td>
+        <td><code>V.98.*</code> atividades dos ACS · <code>V.84.*</code> vigilância em saúde · <code>V.139</code> apoio de gerente/coordenador</td>
+        <td>V.139 pouca variância (quase 100% Sim). V.98.* mede atividades declaradas, não qualidade</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--vl)">E5 — 39,7</strong></td>
+        <td>Orientação para a Comunidade</td>
+        <td><code>V.126.*</code> comunicação com usuários · <code>V.129</code> conselho local · <code>V.134/135</code> ouvidoria · <code>V.125</code> satisfação · <code>V.82</code> parcerias intersetoriais</td>
+        <td>Presença de ouvidoria ou conselho não equivale a participação efetiva</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="ms"><h3>🎯 Score de Oportunidade e Prioridades</h3>
+    <p style="font-size:.7rem;color:var(--muted);margin-bottom:8px">Score = Gap IIRAS (45%) + Prontidão Digital / DIGITAL (30%) + Impacto no Estado (25%)</p>
+    <table class="mt"><tr><th>Componente</th><th>Peso</th><th>Cálculo</th><th>Variáveis</th></tr>
+      <tr><td>Gap de Interoperabilidade</td><td>45%</td><td>100 − IIRAS médio</td><td>V.37.4.1 + .3 + .4 + .5 + .7 + .8 · base V.37=Sim</td></tr>
+      <tr><td>Prontidão Digital</td><td>30%</td><td>Escore DIGITAL = E1×0,6 + E2×0,4</td><td>V.33 + V.35.* + V.37 + V.37.1.* + V.37.3 + V.102 + V.103.3/4/5/6</td></tr>
+      <tr><td>Impacto no Estado</td><td>25%</td><td>Percentil de n_sem_ic dentro da UF</td><td>Contagem de UBS com UBS prontas para integrar por CO_MUNICIPIO_IBGE</td></tr>
+    </table>
+    <br>
+    <table class="mt"><tr><th>Prioridade</th><th>Critério</th><th>Lógica</th></tr>
+      <tr><td><strong style="color:var(--rs)">Alta Probabilidade</strong></td><td>Score ≥ 65 OU V.37.4.11=Sim</td><td>V.37.4.11=Sim → declara não compartilhar nada → entrada automática</td></tr>
+      <tr><td><strong style="color:var(--am)">Média Probabilidade</strong></td><td>Score 50–65</td><td>Boa prontidão e gap real — abordagem planejada</td></tr>
+      <tr><td><strong style="color:var(--sky)">Necessidade de Apoio à Informatização</strong></td><td>Score &lt; 50</td><td>Sem PEP, sem internet adequada ou infraestrutura digital insuficiente para receber solução de integração</td></tr>
+      
+    </table>
+  </div>
+</div>
+<script>
+// ── GLOBALS ──────────────────────────────────────────────────────
+let D, UBS;
+const RC  = {SUL:'#10b981',SUDESTE:'#0ea5e9','CENTRO-OESTE':'#f43f5e',NORDESTE:'#f59e0b',NORTE:'#06b6d4'};
+const RI  = {SUL:'🌿',SUDESTE:'🏙','CENTRO-OESTE':'🌾',NORDESTE:'☀️',NORTE:'🌳'};
+const TC  = {'Alta Probabilidade':'#f43f5e','Média Probabilidade':'#f59e0b','Necessidade de Apoio à Informatização':'#0ea5e9'};
+const PA  = ['#0ea5e9','#10b981','#06b6d4','#f59e0b','#7c3aed','#f43f5e','#84cc16','#f97316'];
+const CH  = {};
+
+Chart.register(ChartDataLabels);
+Chart.defaults.color = '#3a5870';
+Chart.defaults.font.family = "'Segoe UI',sans-serif";
+Chart.defaults.font.size   = 11;
+
+// ── CHART FACTORY ────────────────────────────────────────────────
+function mkC(id, type, data, opts, noAsp) {
+  if (CH[id]) CH[id].destroy();
+  const el = document.getElementById(id);
+  if (!el) return;
+  const plugins = Object.assign({
+    legend:     {labels:{color:'#3a5870',font:{size:10},boxWidth:10}},
+    datalabels: {display:false}
+  }, opts.plugins || {});
+  const options = {responsive:true, maintainAspectRatio:!noAsp, plugins};
+  if (opts.scales)    options.scales    = opts.scales;
+  if (opts.cutout)    options.cutout    = opts.cutout;
+  if (opts.indexAxis) options.indexAxis = opts.indexAxis;
+  CH[id] = new Chart(el, {type, data, options});
+  return CH[id];
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────
+const fmt  = n => Number(n).toLocaleString('pt-BR');
+const pct  = (a,b) => b ? +(a/b*100).toFixed(1) : 0;
+const pil  = v => v>=85?'pg':v>=60?'po':'pr';
+const wAvg = (arr,vk,wk) => {
+  const tw = arr.reduce((s,d)=>s+(d[wk]||0),0);
+  return tw ? arr.reduce((s,d)=>s+(d[vk]||0)*(d[wk]||0),0)/tw : 0;
+};
+// Aggregate mun_compact by key, computing weighted averages
+function aggBy(data, key) {
+  const m={};
+  data.forEach(r=>{
+    const k=r[key];
+    if(!m[k]) m[k]={key:k,regiao:r.regiao,n_ubs:0,n_pep:0,n_sem_ic:0,n_ncomp:0,
+      sp:0,si:0,sii:0,sic:0,stele:0,sspriv:0,se1:0,se2:0,se3:0,se4:0,se5:0};
+    m[k].n_ubs    += r.n_ubs;
+    m[k].n_pep    += r.n_pep;
+    m[k].n_sem_ic += r.n_sem_ic||0;
+    m[k].n_ncomp  += r.n_ncomp||0;
+    m[k].sp    += r.pct_pep   *r.n_ubs;
+    m[k].si    += r.pct_inet  *r.n_ubs;
+    m[k].sii   += (r.iiras||r.ii||0)*r.n_ubs;
+    m[k].sic   += r.pct_ic    *r.n_ubs;
+    m[k].stele += r.pct_tele  *r.n_ubs;
+    m[k].sspriv+= r.pct_spriv *r.n_ubs;
+    m[k].se1   += (r.E1||0)   *r.n_ubs;
+    m[k].se2   += (r.E2||0)   *r.n_ubs;
+    m[k].se3   += (r.E3||0)   *r.n_ubs;
+    m[k].se4   += (r.E4||0)   *r.n_ubs;
+    m[k].se5   += (r.E5||0)   *r.n_ubs;
+  });
+  return Object.values(m).map(u=>({
+    [key]:    u.key, regiao:u.regiao, n_ubs:u.n_ubs, n_pep:u.n_pep,
+    n_sem_ic: u.n_sem_ic, n_ncomp:u.n_ncomp,
+    pct_pep:  u.n_ubs?+(u.sp /u.n_ubs).toFixed(1):0,
+    pct_inet: u.n_ubs?+(u.si /u.n_ubs).toFixed(1):0,
+    ii:       u.n_ubs?+(u.sii/u.n_ubs).toFixed(1):0,
+    pct_ic:   u.n_ubs?+(u.sic/u.n_ubs).toFixed(1):0,
+    pct_tele: u.n_ubs?+(u.stele/u.n_ubs).toFixed(1):0,
+    pct_spriv:u.n_ubs?+(u.sspriv/u.n_ubs).toFixed(1):0,
+    E1: u.n_ubs?+(u.se1/u.n_ubs).toFixed(1):0,
+    E2: u.n_ubs?+(u.se2/u.n_ubs).toFixed(1):0,
+    E3: u.n_ubs?+(u.se3/u.n_ubs).toFixed(1):0,
+    E4: u.n_ubs?+(u.se4/u.n_ubs).toFixed(1):0,
+    E5: u.n_ubs?+(u.se5/u.n_ubs).toFixed(1):0,
+  }));
+}
+
+function noteIcon(key) {
+  const n = D && D.notes && D.notes[key];
+  if (!n) return '';
+  const el = document.createElement('span');
+  el.className='note-icon'; el.title=n; el.textContent='i';
+  return el.outerHTML;
+}
+
+// ── FILTER STATE ─────────────────────────────────────────────────
+let sReg='', sUF='', sMun='', sIBGE='';
+
+function initFilters() {
+  const rs = document.getElementById('f-reg');
+  Object.keys(D.hierarchy).sort().forEach(r=>{
+    const o=document.createElement('option'); o.value=r; o.textContent=RI[r]+' '+r;
+    rs.appendChild(o);
+  });
+}
+function onReg() {
+  sReg=document.getElementById('f-reg').value; sUF=''; sMun=''; sIBGE='';
+  const us=document.getElementById('f-uf'); const ms=document.getElementById('f-mun');
+  us.innerHTML='<option value="">Todos os Estados</option>';
+  ms.innerHTML='<option value="">Todos os Municípios</option>'; ms.disabled=true;
+  if(sReg){ Object.keys(D.hierarchy[sReg]).sort().forEach(u=>{const o=document.createElement('option');o.value=u;o.textContent=u;us.appendChild(o);}); us.disabled=false; }
+  else us.disabled=true;
+  refresh();
+}
+function onUF() {
+  sUF=document.getElementById('f-uf').value; sMun=''; sIBGE='';
+  const ms=document.getElementById('f-mun');
+  ms.innerHTML='<option value="">Todos os Municípios</option>';
+  if(sUF&&sReg){ (D.hierarchy[sReg][sUF]||[]).forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;ms.appendChild(o);}); ms.disabled=false; }
+  else ms.disabled=true;
+  refresh();
+}
+function onMun() {
+  sMun=document.getElementById('f-mun').value;
+  if(sMun&&sUF){ const f=D.mun_compact.find(m=>m.municipio===sMun&&m.uf===sUF); sIBGE=f?String(f.ibge):''; }
+  else sIBGE='';
+  refresh();
+}
+function resetF() {
+  document.getElementById('f-reg').value='';
+  document.getElementById('f-uf').innerHTML='<option value="">Todos os Estados</option>'; document.getElementById('f-uf').disabled=true;
+  document.getElementById('f-mun').innerHTML='<option value="">Todos os Municípios</option>'; document.getElementById('f-mun').disabled=true;
+  sReg=''; sUF=''; sMun=''; sIBGE=''; refresh();
+}
+function getFiltered() {
+  return D.mun_compact.filter(m=>(!sReg||m.regiao===sReg)&&(!sUF||m.uf===sUF)&&(!sMun||m.municipio===sMun));
+}
+
+// ── MAIN REFRESH — called on every filter change ──────────────────
+function refresh() {
+  const data = getFiltered();
+  const nu   = data.reduce((s,m)=>s+m.n_ubs,0);
+  let lbl='Brasil completo';
+  if(sMun) lbl=sMun+' / '+sUF;
+  else if(sUF)  lbl=sUF+' — '+data.length+' municípios';
+  else if(sReg) lbl=RI[sReg]+' '+sReg;
+  document.getElementById('scope-txt').textContent=lbl;
+  document.getElementById('fsc').textContent='📍 '+fmt(nu)+' UBS · '+fmt(data.length)+' municípios';
+  drawNac(data);
+  drawRank(data);
+  drawInterop(data);
+  drawDig(data);
+  drawComp(data);
+  drawOpp(data);
+  drawDrill();
+}
+
+// ══════════════════════════════════════════════════════════════════
+// NACIONAL
+// ══════════════════════════════════════════════════════════════════
+function drawNac(data) {
+  const N=data.reduce((s,m)=>s+m.n_ubs,0); if(!N) return;
+  const ppep=wAvg(data,'pct_pep','n_ubs'), pinet=wAvg(data,'pct_inet','n_ubs');
+  const ptele=wAvg(data,'pct_tele','n_ubs'), pic=wAvg(data,'pct_ic','n_ubs');
+  const npep=data.reduce((s,m)=>s+m.n_pep,0);
+  document.getElementById('kpi-nac').innerHTML=[
+    ['UBS no Escopo',    fmt(N),             data.length+' municípios',        'k-em',''],
+    ['Com PEP',          ppep.toFixed(1)+'%',fmt(npep)+' UBS com prontuário',  'k-em','pct_pep'],
+    ['Internet Adequada',pinet.toFixed(1)+'%','Conectividade plena',           'k-cy','pct_inet'],
+    ['Telessaúde',       ptele.toFixed(1)+'%','≥1 modalidade ativa',           'k-vl','pct_tele'],
+    ['Interop. Crítica', pic.toFixed(1)+'%', 'Base: UBS com PEP',              'k-am','pct_ic'],
+    ['Gap Interop',      (100-pic).toFixed(1)+'%','UBS c/ PEP sem conexão crítica','k-rs','pct_ic'],
+  ].map(([l,v,s,c])=>'<div class="kpi '+c+'"><div class="kl">'+l+'</div><div class="kv">'+v+'</div><div class="ks">'+s+'</div></div>').join('');
+
+  const rd={};
+  data.forEach(m=>{if(!rd[m.regiao])rd[m.regiao]={sp:0,sn:0};rd[m.regiao].sp+=m.pct_pep*m.n_ubs;rd[m.regiao].sn+=m.n_ubs;});
+  const regs=Object.keys(rd).sort(), pV=regs.map(r=>+(rd[r].sp/rd[r].sn).toFixed(1)), pN=regs.map(r=>rd[r].sn);
+  mkC('c-pep-reg','bar',{labels:regs.map(r=>RI[r]+' '+r),
+    datasets:[{data:pV,backgroundColor:regs.map(r=>RC[r]+'99'),borderColor:regs.map(r=>RC[r]),borderWidth:2,borderRadius:6}]},
+    {plugins:{legend:{display:false},datalabels:{display:true,anchor:'center',align:'center',color:'#fff',font:{weight:'bold',size:12},
+      formatter:(v,ctx)=>v+'%  '+fmt(pN[ctx.dataIndex])}},
+    scales:{y:{display:false},x:{grid:{display:false}}}});
+
+  const adN=Math.round(N*wAvg(data,'pct_inet','n_ubs')/100);
+  const semN=Math.round(N*D.kpis.pct_sem_inet/100); const inadN=N-adN-semN;
+  mkC('c-inet','doughnut',{labels:['Adequada','Inadequada','Sem Internet'],
+    datasets:[{data:[adN,inadN,semN],backgroundColor:['#10b981bb','#f59e0bbb','#f43f5ebb'],
+      borderColor:['#10b981','#f59e0b','#f43f5e'],borderWidth:2,hoverOffset:6}]},
+    {cutout:'60%',plugins:{legend:{position:'bottom'},
+      datalabels:{display:true,color:'#fff',font:{weight:'bold',size:10},formatter:v=>(v/N*100).toFixed(0)+'%  '+fmt(v)}}});
+
+  const nsic=data.reduce((s,m)=>s+m.n_sem_ic,0);
+  const npep2=data.reduce((s,m)=>s+m.n_pep,0);
+  const ninet=Math.round(N*wAvg(data,'pct_inet','n_ubs')/100);
+  const nspriv=Math.round(N*wAvg(data,'pct_spriv','n_ubs')/100);
+  const nncomp=data.reduce((s,m)=>s+(m.n_ncomp||0),0);
+  // Sales narrative: percentages relative to UBS with PEP (the relevant universe)
+
+}
+
+function drawRank(data) {
+  const ufs=aggBy(data,'uf');
+  const sp=[...ufs].sort((a,b)=>a.pct_pep-b.pct_pep);
+  mkC('c-uf-pep','bar',{labels:sp.map(u=>u.uf),
+    datasets:[{data:sp.map(u=>u.pct_pep),backgroundColor:sp.map(u=>(RC[u.regiao]||'#888')+'99'),
+      borderColor:sp.map(u=>RC[u.regiao]||'#888'),borderWidth:1,borderRadius:3}]},
+    {indexAxis:'y',plugins:{legend:{display:false},
+      datalabels:{display:true,anchor:'end',align:'right',color:'#fff',font:{size:9,weight:'bold'},formatter:v=>v+'%'}},
+    scales:{x:{min:0,max:115,display:false}}},true);
+  const si=[...ufs].sort((a,b)=>(a.iiras||a.ii)-(b.iiras||b.ii));
+  mkC('c-uf-ii','bar',{labels:si.map(u=>u.uf),
+    datasets:[{data:si.map(u=>u.iiras||u.ii),backgroundColor:si.map(u=>(RC[u.regiao]||'#888')+'99'),
+      borderColor:si.map(u=>RC[u.regiao]||'#888'),borderWidth:1,borderRadius:3}]},
+    {indexAxis:'y',plugins:{legend:{display:false},
+      datalabels:{display:true,anchor:'end',align:'right',color:'#fff',font:{size:9,weight:'bold'},formatter:v=>v}},
+    scales:{x:{min:0,max:45,display:false}}},true);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// INTEROPERABILIDADE
+// ══════════════════════════════════════════════════════════════════
+function drawInterop(data) {
+  const pic=wAvg(data,'pct_ic','n_ubs')||D.kpis.pct_ic;
+  const iiras_scope=wAvg(data,'iiras','n_ubs')||D.kpis.iiras; document.getElementById('crit-pct').textContent=iiras_scope.toFixed(1)+'%';
+  const nsic=data.reduce((s,m)=>s+m.n_sem_ic,0);
+  document.getElementById('crit-nsic').textContent=fmt(nsic);
+
+  // Map pts labels to interop_nac structure
+  const PT_MAP = {
+    'UBS':'Outras UBS','Lab':'Exames/Lab','UPA':'UPA','Urgência':'Urgência/PS',
+    'Espec.Pub':'Espec. Pública','Espec.Priv':'Espec. Privada',
+    'Hosp.Pub':'Hospital Público','Hosp.Conv':'Hospital Conv.',
+    'CAPS':'CAPS','CEO':'CEO','Não Comp.':'Não Compartilha'
+  };
+  const CRIT_SET = new Set(['Outras UBS','UPA','Urgência/PS','Espec. Pública','Hospital Público','Hospital Conv.']); // RAS points
+  const icons = {'Outras UBS':'🏥','Exames/Lab':'🔬','UPA':'🚨','Urgência/PS':'🚑',
+    'Espec. Pública':'👨‍⚕️','Espec. Privada':'🏢','Hospital Público':'🏨','Hospital Conv.':'🏩',
+    'CAPS':'🧠','CEO':'🦷','Não Compartilha':'⛔'};
+
+  // Compute interop counts from actual UBS data when filtered
+  let interopItems;
+  const filteredUBS = [];
+  if (sIBGE) {
+    // Single municipality — use UBS individual data
+    (UBS[sIBGE]||[]).filter(u=>u.pep).forEach(u=>filteredUBS.push(u));
+  } else {
+    // Multiple municipalities — collect all UBS from filtered mun_compact
+    data.filter(m=>m.n_pep>0).forEach(m=>{
+      const ibge = String(m.ibge);
+      (UBS[ibge]||[]).filter(u=>u.pep).forEach(u=>filteredUBS.push(u));
+    });
+  }
+
+  if (filteredUBS.length > 0) {
+    // Calculate from real UBS data
+    const base = filteredUBS.length;
+    const ptCounts = {};
+    filteredUBS.forEach(u=>{
+      u.pts.forEach(p=>{
+        const label = PT_MAP[p.l] || p.l;
+        ptCounts[label] = (ptCounts[label]||0) + 1;
+      });
+    });
+    interopItems = D.interop_nac.map(it=>({
+      ...it,
+      n: ptCounts[it.label]||0,
+      pct: +((ptCounts[it.label]||0)/base*100).toFixed(1)
+    }));
+  } else {
+    interopItems = D.interop_nac;
+  }
+
+  document.getElementById('ig').innerHTML=interopItems.map(it=>{
+    const isI=it.col==='V.37.4.11'; const vc=isI?'#f43f5e':it.critico?'#f59e0b':'#06b6d4';
+    const badge=isI?'<div class="badge-r">⛔ Não Compartilha</div>':it.critico?'<div class="badge-w">🔗 RAS</div>':'';
+    return '<div class="ic'+(isI?' isol':it.critico?' crit':'')+'">'+
+      '<div style="font-size:1.3rem">'+(icons[it.label]||'📋')+'</div>'+
+      '<div style="font-size:1.6rem;font-weight:800;color:'+vc+';margin:3px 0 2px">'+it.pct+'%</div>'+
+      '<div style="font-size:.65rem;color:var(--muted)">'+it.label+'</div>'+
+      '<div style="font-size:.59rem;color:rgba(255,255,255,.28)">'+fmt(it.n)+' UBS</div>'+badge+'</div>';
+  }).join('');
+
+  // Scope chart: adapt grouping to filter level
+  const groups = sUF  ? aggBy(data,'municipio').sort((a,b)=>(b.iiras||b.ii)-(a.iiras||a.ii)).slice(0,25)
+               : sReg ? aggBy(data,'uf').sort((a,b)=>(b.iiras||b.ii)-(a.iiras||a.ii))
+               :        aggBy(data,'regiao').sort((a,b)=>b.ii-a.ii);
+  const gkey   = sUF?'municipio':sReg?'uf':'regiao';
+  const useH   = groups.length > 6;
+  mkC('c-it-scope','bar',{labels:groups.map(g=>g[gkey]),
+    datasets:[
+      {label:'% Interop Crítica',   data:groups.map(g=>g.pct_ic), backgroundColor:'#f59e0b88',borderColor:'#f59e0b',borderWidth:1.5,borderRadius:3},
+      {label:'IIRAS (0-100)',data:groups.map(g=>g.iiras||g.ii),   backgroundColor:'#06b6d488',borderColor:'#06b6d4',borderWidth:1.5,borderRadius:3},
+    ]},{
+    indexAxis:useH?'y':'x',
+    plugins:{legend:{position:'top'},
+      datalabels:{display:true,anchor:'end',align:useH?'right':'top',color:'#fff',font:{weight:'bold',size:9},formatter:v=>v>0?v:''}},
+    scales:useH?{x:{min:0,max:115,display:false}}:{y:{min:0,max:110}}
+  });
+
+  mkC('c-radar-it','radar',{
+    labels:['Entre UBS','Apoio Diag.','Urgência','Espec.Pub.','Hospitalar','Mental','Odonto'],
+    datasets:[{label:'% UBS com PEP',data:[79.9,16.3,13.5,11.2,4.5,23.6,19.7],
+      backgroundColor:'rgba(6,182,212,.1)',borderColor:'#06b6d4',borderWidth:2,
+      pointBackgroundColor:'#06b6d4',pointRadius:4}]},
+    {plugins:{legend:{display:false},
+      datalabels:{display:true,color:'#06b6d4',font:{weight:'bold',size:9},formatter:v=>v+'%'}},
+    scales:{r:{min:0,max:85,ticks:{stepSize:20,backdropColor:'transparent'},
+      grid:{color:'rgba(255,255,255,.05)'},pointLabels:{color:'#3a5870',font:{size:10}}}}});
+}
+
+// ══════════════════════════════════════════════════════════════════
+// PRONTIDÃO DIGITAL — fully filter-aware
+// ══════════════════════════════════════════════════════════════════
+function drawDig(data) {
+  if(!data||!data.length) return;
+  const N=data.reduce((s,m)=>s+m.n_ubs,0);
+  const wE=k=>+(data.reduce((s,m)=>s+(m[k]||0)*m.n_ubs,0)/N).toFixed(1);
+  const e1=wE('E1'),e2=wE('E2'),e3=wE('E3'),e4=wE('E4'),e5=wE('E5');
+  const dig=+((e1*0.6+e2*0.4)).toFixed(1), intl=+((e1+e2+e3+e4+e5)/5).toFixed(1);
+
+  document.getElementById('kpi-dig').innerHTML=[
+    ['INTELIGENTE',intl, 'Média E1–E5',         'k-em'],
+    ['DIGITAL',    dig,  'E1×0,6 + E2×0,4',     'k-cy'],
+    ['E1 Infra',   e1,   'Conectividade+PEP',   'k-sky'],
+    ['E2 Acesso',  e2,   'Agendamento digital',  'k-am'],
+    ['E3 Coord.',  e3,   'Interop+telessaúde',  'k-rs'],
+    ['E4 Longit.', e4,   'ACS+vigilância',       'k-li'],
+    ['E5 Comun.',  e5,   'Equidade+partic.',     'k-vl'],
+  ].map(([l,v,s,c])=>'<div class="kpi '+c+'"><div class="kl">'+l+'</div><div class="kv">'+v+'</div><div class="ks">'+s+'</div></div>').join('');
+
+  // Radar: by region normally; by UF when a single region is selected
+  const regMap={};
+  data.forEach(m=>{
+    if(!regMap[m.regiao])regMap[m.regiao]={n:0,s1:0,s2:0,s3:0,s4:0,s5:0};
+    regMap[m.regiao].n+=m.n_ubs; regMap[m.regiao].s1+=(m.E1||0)*m.n_ubs;
+    regMap[m.regiao].s2+=(m.E2||0)*m.n_ubs; regMap[m.regiao].s3+=(m.E3||0)*m.n_ubs;
+    regMap[m.regiao].s4+=(m.E4||0)*m.n_ubs; regMap[m.regiao].s5+=(m.E5||0)*m.n_ubs;
+  });
+  let radarDS, radarLbl=['E1 Infra','E2 Acesso','E3 Coord.','E4 Longit.','E5 Comun.'];
+  const regions=Object.keys(regMap);
+
+  if(regions.length===1&&!sUF) {
+    // single region → show by UF
+    const ufMap={};
+    data.forEach(m=>{
+      if(!ufMap[m.uf])ufMap[m.uf]={n:0,s1:0,s2:0,s3:0,s4:0,s5:0};
+      ufMap[m.uf].n+=m.n_ubs; ufMap[m.uf].s1+=(m.E1||0)*m.n_ubs;
+      ufMap[m.uf].s2+=(m.E2||0)*m.n_ubs; ufMap[m.uf].s3+=(m.E3||0)*m.n_ubs;
+      ufMap[m.uf].s4+=(m.E4||0)*m.n_ubs; ufMap[m.uf].s5+=(m.E5||0)*m.n_ubs;
+    });
+    radarDS=Object.keys(ufMap).map((uf,i)=>({label:uf,
+      data:[+(ufMap[uf].s1/ufMap[uf].n).toFixed(1),+(ufMap[uf].s2/ufMap[uf].n).toFixed(1),
+            +(ufMap[uf].s3/ufMap[uf].n).toFixed(1),+(ufMap[uf].s4/ufMap[uf].n).toFixed(1),+(ufMap[uf].s5/ufMap[uf].n).toFixed(1)],
+      backgroundColor:(Object.values(RC)[i%5])+'18',borderColor:Object.values(RC)[i%5],
+      borderWidth:2,pointBackgroundColor:Object.values(RC)[i%5],pointRadius:3}));
+  } else {
+    radarDS=regions.map(r=>({label:r,
+      data:[+(regMap[r].s1/regMap[r].n).toFixed(1),+(regMap[r].s2/regMap[r].n).toFixed(1),
+            +(regMap[r].s3/regMap[r].n).toFixed(1),+(regMap[r].s4/regMap[r].n).toFixed(1),+(regMap[r].s5/regMap[r].n).toFixed(1)],
+      backgroundColor:(RC[r]||'#888')+'18',borderColor:RC[r]||'#888',
+      borderWidth:2,pointBackgroundColor:RC[r]||'#888',pointRadius:3}));
+  }
+  mkC('c-radar-dim','radar',{labels:radarLbl,datasets:radarDS},{
+    plugins:{legend:{position:'bottom',labels:{boxWidth:8,font:{size:9}}},
+      datalabels:{display:true,color:'rgba(255,255,255,.7)',font:{size:8},formatter:v=>v}},
+    scales:{r:{min:0,max:100,ticks:{stepSize:25,backdropColor:'transparent'},
+      grid:{color:'rgba(255,255,255,.05)'},pointLabels:{color:'#3a5870',font:{size:10}}}}});
+
+  // Scatter filtered
+  const regSet=new Set(data.map(m=>m.regiao));
+  const rm={};
+  D.scatter.filter(p=>regSet.has(p.r)).forEach(p=>{
+    if(!rm[p.r])rm[p.r]={label:p.r,data:[],backgroundColor:(RC[p.r]||'#888')+'40',
+      borderColor:(RC[p.r]||'#888')+'80',borderWidth:0,pointRadius:2};
+    rm[p.r].data.push({x:p.x,y:p.y});
+  });
+  mkC('c-scatter','scatter',{datasets:[...Object.values(rm),
+    {label:'y=x',data:[{x:0,y:0},{x:100,y:100}],type:'line',
+      borderColor:'rgba(255,255,255,.1)',borderDash:[4,4],borderWidth:1,pointRadius:0,fill:false}]},{
+    plugins:{legend:{position:'bottom',labels:{boxWidth:8,font:{size:9},filter:l=>l.text!=='y=x'}},
+      datalabels:{display:false},tooltip:{callbacks:{label:c=>'DIG '+c.raw.x+' | INT '+c.raw.y}}},
+    scales:{x:{min:0,max:100,title:{display:true,text:'Escore DIGITAL',color:'#3a5870'}},
+            y:{min:0,max:100,title:{display:true,text:'Escore INTELIGENTE',color:'#3a5870'}}}});
+
+  // Static charts (always national - base does not change)
+  const ak=Object.keys(D.agend_d), av=ak.map(k=>D.agend_d[k].pct);
+  const agC=ak.map(k=>k==='Meu SUS Digital'?'#f43f5e':k==='Via ACS'?'#3a5870':k==='WhatsApp'?'#10b981':k==='Site'||k==='App próprio'?'#f59e0b':'#0ea5e9');
+  mkC('c-agend','bar',{labels:ak,datasets:[{data:av,backgroundColor:agC.map(c=>c+'bb'),borderColor:agC,borderWidth:1.5,borderRadius:4}]},{
+    indexAxis:'y',plugins:{legend:{display:false},datalabels:{display:true,anchor:'end',align:'right',color:'#fff',font:{weight:'bold',size:10},formatter:v=>v+'%'}},
+    scales:{x:{min:0,max:112,display:false}}});
+
+  const tk=Object.keys(D.tele_d),tv=tk.map(k=>D.tele_d[k].pct);
+  mkC('c-tele','bar',{labels:tk,datasets:[{data:tv,backgroundColor:PA.map(c=>c+'bb'),borderColor:PA,borderWidth:1.5,borderRadius:4}]},{
+    indexAxis:'y',plugins:{legend:{display:false},datalabels:{display:true,anchor:'end',align:'right',color:'#fff',font:{weight:'bold',size:10},formatter:v=>v+'%'}},
+    scales:{x:{min:0,max:30,display:false}}});
+
+  const pk=Object.keys(D.plat_d),pv=pk.map(k=>D.plat_d[k].pct);
+  mkC('c-plat','bar',{labels:pk,datasets:[{data:pv,backgroundColor:PA.map(c=>c+'bb'),borderColor:PA,borderWidth:1.5,borderRadius:4}]},{
+    indexAxis:'y',plugins:{legend:{display:false},datalabels:{display:true,anchor:'end',align:'right',color:'#fff',font:{weight:'bold',size:10},formatter:v=>v+'%'}},
+    scales:{x:{min:0,max:70,display:false}}});
+
+  const prk=Object.keys(D.pep_prof),prv=prk.map(k=>D.pep_prof[k].pct);
+  mkC('c-prof','bar',{labels:prk,datasets:[{data:prv,backgroundColor:'#0ea5e9bb',borderColor:'#0ea5e9',borderWidth:1.5,borderRadius:4}]},{
+    indexAxis:'y',plugins:{legend:{display:false},datalabels:{display:true,anchor:'end',align:'right',color:'#fff',font:{weight:'bold',size:10},formatter:v=>v+'%'}},
+    scales:{x:{min:0,max:112,display:false}}});
+}
+
+// ══════════════════════════════════════════════════════════════════
+// COMPARATIVOS
+// ══════════════════════════════════════════════════════════════════
+function drawComp(data) {
+  const m=document.getElementById('m-sel').value;
+  const g=document.getElementById('g-sel').value;
+  const src=aggBy(data,g==='reg'?'regiao':'uf');
+  const lk=g==='reg'?'regiao':'uf';
+  const ml={'pct_pep':'% PEP','pct_inet':'% Internet','ii':'Índice Interop'};
+  document.getElementById('comp-ttl').textContent=ml[m]+' por '+(g==='reg'?'Região':'UF');
+  mkC('c-comp','bar',{labels:src.map(r=>r[lk]),datasets:[{data:src.map(r=>r[m]),
+    backgroundColor:src.map(r=>(RC[r.regiao||r[lk]]||PA[0])+'99'),borderRadius:5,borderWidth:1}]},{
+    plugins:{legend:{display:false},datalabels:{display:true,anchor:'end',align:'top',color:'#fff',font:{weight:'bold',size:10},formatter:v=>v+(m==='ii'?'':'%')}},
+    scales:{y:{min:0,max:m==='ii'?45:110,ticks:{display:false}}}});
+
+  const fReg=aggBy(data,'regiao');
+  mkC('c-bub-reg','bubble',{datasets:fReg.map(r=>({label:r.regiao,
+    data:[{x:r.pct_pep,y:r.ii,r:Math.max(Math.sqrt(r.n_ubs/250),10)}],
+    backgroundColor:(RC[r.regiao]||'#888')+'44',borderColor:RC[r.regiao]||'#888',borderWidth:2}))},{
+    plugins:{legend:{position:'right'},datalabels:{display:false},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': PEP '+c.raw.x+'% | Interop '+c.raw.y}}},
+    scales:{x:{min:55,max:100,title:{display:true,text:'% PEP',color:'#3a5870'}},
+            y:{min:0,max:40,title:{display:true,text:'Índice Interop',color:'#3a5870'}}}});
+
+  document.getElementById('t-comp').innerHTML='<thead><tr><th>'+(g==='reg'?'Região':'UF')+'</th><th>UBS</th><th>% PEP</th><th>% Internet</th><th>Idx Interop</th></tr></thead><tbody>'+
+    src.map(r=>'<tr><td><strong>'+r[lk]+'</strong></td><td>'+fmt(r.n_ubs)+'</td>'+
+      '<td><span class="pill '+pil(r.pct_pep)+'">'+r.pct_pep+'%</span></td>'+
+      '<td><span class="pill '+pil(r.pct_inet)+'">'+r.pct_inet+'%</span></td>'+
+      '<td><div style="font-weight:700">'+r.ii+'</div><div class="pw"><div class="pw2" style="width:'+(r.ii/40*100)+'%;background:'+(r.ii>25?'#10b981':r.ii>15?'#f59e0b':'#f43f5e')+'"></div></div></td></tr>'
+    ).join('')+'</tbody>';
+}
+function updComp(){refresh();}
+
+// ══════════════════════════════════════════════════════════════════
+// EXPLORAR UBS
+// ══════════════════════════════════════════════════════════════════
+let dC=null;
+function drawDrill() {
+  const ph=document.getElementById('drill-ph'), ct=document.getElementById('drill-ct');
+  if(!sMun||!sIBGE){ph.style.display='block';ct.style.display='none';return;}
+  ph.style.display='none'; ct.style.display='block';
+  const ul=UBS[sIBGE]||[];
+  const n=ul.length,np=ul.filter(u=>u.pep).length,nc=ul.filter(u=>u.crit).length;
+  const nt=ul.filter(u=>u.tele).length,ni=ul.filter(u=>u.inet==='adequada').length;
+  document.getElementById('drill-ttl').textContent='UBS de '+sMun+'/'+sUF+' — '+n+' unidades';
+  document.getElementById('drill-kpis').innerHTML='<div class="ct">'+sMun+' / '+sUF+'</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px">'+
+    '<div><div class="kl">Total UBS</div><div class="kv" style="font-size:1.4rem">'+n+'</div></div>'+
+    '<div><div class="kl">Com PEP</div><div class="kv" style="font-size:1.4rem;color:#10b981">'+np+' <span style="font-size:.72rem">('+( n?Math.round(np/n*100):0)+'%)</span></div></div>'+
+    '<div><div class="kl">Internet Adequada</div><div class="kv" style="font-size:1.4rem;color:#06b6d4">'+ni+'</div></div>'+
+    '<div><div class="kl">Interop Crítica</div><div class="kv" style="font-size:1.4rem;color:'+(nc/n>.3?'#10b981':'#f43f5e')+'">'+nc+'</div></div>'+
+    '<div><div class="kl">Telessaúde</div><div class="kv" style="font-size:1.4rem;color:#7c3aed">'+nt+'</div></div>'+
+    '<div><div class="kl">Não Compartilha</div><div class="kv" style="font-size:1.4rem;color:#f59e0b">'+ul.filter(u=>u.pts.some(p=>p.l==='Não Comp.')).length+'</div></div>'+
+    '</div>';
+  const pu=ul.filter(u=>u.pep);
+  const iL=['UBS','Lab','UPA','Urgência','Espec.Pub','Espec.Priv','Hosp.Pub','Hosp.Conv','CAPS','CEO'];
+  const cS=new Set(['UPA','Urgência','Espec.Pub','Hosp.Pub','Hosp.Conv']);
+  const iV=iL.map(lb=>pu.length?+(pu.filter(u=>u.pts.some(p=>p.l===lb)).length/pu.length*100).toFixed(1):0);
+  if(dC)dC.destroy();
+  dC=new Chart(document.getElementById('c-drill-it'),{type:'bar',data:{labels:iL,datasets:[{data:iV,
+    backgroundColor:iL.map(l=>cS.has(l)?'#f59e0b99':'#0ea5e999'),borderColor:iL.map(l=>cS.has(l)?'#f59e0b':'#0ea5e9'),borderWidth:1.5,borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},
+      datalabels:{display:true,anchor:'end',align:'right',color:'#fff',font:{size:9,weight:'bold'},formatter:v=>v>0?v+'%':''}},
+      scales:{x:{min:0,max:115,display:false}}}});
+  const iI={'adequada':'✅','inadequada':'⚠️','sem':'❌'};
+  document.getElementById('t-ubs').innerHTML='<thead><tr><th>UBS</th><th>Internet</th><th>PEP</th><th>Software</th><th>Tele</th><th>Interop</th><th>Pontos</th></tr></thead><tbody>'+
+    ul.map(u=>{const cr=u.pts.filter(p=>p.c).map(p=>'<span class="bi bi-c">'+p.l+'</span>').join('');
+      const ot=u.pts.filter(p=>!p.c&&p.l!=='Não Comp.').map(p=>'<span class="bi bi-x">'+p.l+'</span>').join('');
+      const nc2=u.pts.some(p=>p.l==='Não Comp.')?'<span class="bi bi-n">Não</span>':'';
+      return '<tr><td><strong style="font-size:.71rem">'+u.nome+'</strong></td>'+
+        '<td>'+(iI[u.inet]||u.inet)+'</td>'+
+        '<td>'+(u.pep?'<span class="pill pg">✓</span>':'<span class="pill pr">✗</span>')+'</td>'+
+        '<td style="font-size:.63rem;color:var(--muted)">'+u.soft+'</td>'+
+        '<td>'+(u.tele?'<span class="pill pv">✓</span>':'—')+'</td>'+
+        '<td><strong style="color:'+(u.idx>30?'#10b981':u.idx>10?'#f59e0b':'#f43f5e')+'">'+u.idx+'</strong>'+
+        '<div class="pw"><div class="pw2" style="width:'+u.idx+'%;background:'+(u.idx>30?'#10b981':u.idx>10?'#f59e0b':'#f43f5e')+'"></div></div></td>'+
+        '<td>'+cr+ot+nc2+'</td></tr>';
+    }).join('')+'</tbody>';
+}
+
+// ══════════════════════════════════════════════════════════════════
+// OPORTUNIDADE — 100% dynamic
+// ══════════════════════════════════════════════════════════════════
+function drawOpp(data) {
+  if(!data||!data.length) return;
+  const N    = data.reduce((s,m)=>s+m.n_ubs,0);
+  const npep = data.reduce((s,m)=>s+m.n_pep,0);
+  const nsic = data.reduce((s,m)=>s+m.n_sem_ic,0);
+  const nspriv = data.reduce((s,m)=>s+Math.round(m.pct_spriv/100*m.n_ubs),0);
+  const nncomp = data.reduce((s,m)=>s+(m.n_ncomp||0),0);
+  const t1 = data.filter(m=>m.tier==='Alta Probabilidade').length;
+  const t2 = data.filter(m=>m.tier==='Média Probabilidade').length;
+  const t3 = data.filter(m=>m.tier==='Necessidade de Apoio à Informatização').length;
+  const pic= wAvg(data,'pct_ic','n_ubs');
+
+  // Dynamic KPIs
+  document.getElementById('opp-kpis').innerHTML=[
+    ['Alta Probabilidade',    t1,              'municípios com alta probabilidade',                    'k-rs'],
+    ['Média Probabilidade',   t2,              'municípios com média probabilidade',                   'k-am'],
+    ['Necessidade de Apoio à Informatização', t3, 'municípios com infraestrutura insuficiente',        'k-sky'],
+    ['UBS prontas para integrar', fmt(nsic),   'têm PEP mas não conectam à RAS',                      'k-li'],
+    ['Não compartilha nada',  fmt(nncomp),     'UBS com PEP que declaram não compartilhar nada',       'k-rs'],
+    ['Gap de Interoperabilidade', (100-pic).toFixed(1)+'%','das UBS com PEP sem conexão à RAS',        'k-am'],
+  ].map(([l,v,s,c])=>'<div class="kpi '+c+'"><div class="kl">'+l+'</div><div class="kv">'+v+'</div><div class="ks">'+s+'</div></div>').join('');
+
+    // Sales funnel — base: UBS with PEP (relevant universe for integration sales)
+  // Funil data
+  const nesus  = (D.software.find(s=>s.software==='e-SUS APS')||{n:0}).n;
+  const nspriv2= (D.software.find(s=>s.software==='Software privado')||{n:0}).n;
+  const npubp  = (D.software.find(s=>s.software==='Software público próprio')||{n:0}).n;
+  const ninet  = Math.round(npep2 * (D.kpis.pct_inet/100));
+  const ntrein = Math.round(npep2 * (D.kpis.pep_trein/100));
+
+  // Row 1: PEP com barra segmentada (e-SUS + privado + público)
+  const pepRow = '<div class="fi">'+
+    '<div class="fl"><div style="font-size:.7rem;color:var(--text)">🏥 UBS com PEP instalado</div>'+
+    '<div style="font-size:.6rem;color:var(--muted);margin-top:2px">Têm prontuário — precisam agora da integração</div></div>'+
+    '<div class="fb2"><div style="display:flex;width:100%;height:28px;border-radius:4px;overflow:hidden">'+
+    '<div style="width:'+pct(nesus,N).toFixed(1)+'%;background:#0ea5e9bb;border-left:3px solid #0ea5e9;display:flex;align-items:center;padding:0 6px;gap:4px">'+
+    '<span style="font-size:.62rem;font-weight:700;color:#fff">'+pct(nesus,N).toFixed(1)+'%</span>'+
+    '<span style="font-size:.55rem;color:rgba(255,255,255,.7)">e-SUS</span></div>'+
+    '<div style="width:'+pct(nspriv2,N).toFixed(1)+'%;background:#7c3aedbb;display:flex;align-items:center;padding:0 6px;gap:4px">'+
+    '<span style="font-size:.62rem;font-weight:700;color:#fff">'+pct(nspriv2,N).toFixed(1)+'%</span>'+
+    '<span style="font-size:.55rem;color:rgba(255,255,255,.7)">Privado</span></div>'+
+    '<div style="width:'+pct(npubp,N).toFixed(1)+'%;background:#06b6d4bb;display:flex;align-items:center;padding:0 4px">'+
+    '<span style="font-size:.55rem;color:rgba(255,255,255,.7)">Púb.</span></div>'+
+    '</div>'+
+    '<div style="font-size:.58rem;color:var(--muted);margin-top:3px">'+fmt(npep2)+' UBS · e-SUS '+fmt(nesus)+' · Privado '+fmt(nspriv2)+'</div>'+
+    '</div></div>';
+
+  // Rows 2-5: barras simples
+  const funil=[
+    {l:'UBS prontas para integrar',    sub:'Têm PEP mas não conectam à RAS',                    n:nsic,   pct:pct(nsic,npep2),   c:'#f59e0b',icon:'🔌'},
+    {l:'Sem nenhum compartilhamento',  sub:'Declararam não compartilhar com nenhum serviço',     n:nncomp, pct:pct(nncomp,npep2), c:'#f43f5e',icon:'🚨'},
+    {l:'Com internet adequada',        sub:'Conectividade suficiente para integração digital',   n:ninet,  pct:pct(ninet,npep2),  c:'#10b981',icon:'🌐'},
+    {l:'Com treinamento no PEP',       sub:'Profissionais capacitados para uso do prontuário',   n:ntrein, pct:pct(ntrein,npep2), c:'#84cc16',icon:'🎓'},
+  ];
+
+  document.getElementById('fn-nac').innerHTML=
+    '<div style="font-size:.66rem;color:var(--muted);margin-bottom:8px">Base: '+fmt(npep2)+' UBS com PEP ('+pct(npep2,N).toFixed(1)+'% do total)</div>'+
+    pepRow +
+    funil.map(function(f){return(
+      '<div class="fi">'+
+      '<div class="fl"><div style="font-size:.7rem;color:var(--text)">'+f.icon+' '+f.l+'</div>'+
+      '<div style="font-size:.6rem;color:var(--muted);margin-top:2px">'+f.sub+'</div></div>'+
+      '<div class="fb2"><div class="fb3" style="width:'+f.pct.toFixed(1)+'%;background:'+f.c+'88;border-left:3px solid '+f.c+'">'+
+      '<span class="fp">'+f.pct.toFixed(1)+'%</span><span class="fn2">'+fmt(f.n)+'</span></div></div></div>'
+    );}).join('');
+
+  const tDs={};
+  data.filter(m=>m.n_pep>=3).forEach(m=>{
+    if(!tDs[m.tier])tDs[m.tier]={label:m.tier,data:[],backgroundColor:(TC[m.tier]||'#888')+'20',borderColor:(TC[m.tier]||'#888')+'80',borderWidth:1};
+    tDs[m.tier].data.push({x:m.opp,y:m.n_sem_ic,r:Math.max(Math.sqrt(m.n_ubs)*1.1,3),lbl:m.municipio+'/'+m.uf});
+  });
+  mkC('c-bub-opp','bubble',{datasets:['Alta Probabilidade','Média Probabilidade','Necessidade de Apoio à Informatização'].filter(t=>tDs[t]).map(t=>tDs[t])},{
+    plugins:{legend:{position:'bottom',labels:{boxWidth:8,font:{size:9}}},datalabels:{display:false},
+      tooltip:{callbacks:{label:c=>[c.raw.lbl,'Score: '+c.raw.x,'UBS prontas para integrar: '+c.raw.y]}}},
+    scales:{x:{min:0,max:100,title:{display:true,text:'Score de Oportunidade',color:'#3a5870'}},
+            y:{title:{display:true,text:'UBS prontas para integrar',color:'#3a5870'}}}});
+
+  renderOpp(data);
+
+  // Tiers por região — dynamic
+  // Tier label: show reason for Alta Probabilidade (ncomp vs score)
+  const tByR={};
+  data.forEach(m=>{
+    if(!tByR[m.regiao])tByR[m.regiao]={'Alta Probabilidade':0,'Média Probabilidade':0,'Necessidade de Apoio à Informatização':0};
+    tByR[m.regiao][m.tier]++;
+  });
+  const regsR=Object.keys(tByR).sort();
+  mkC('c-tier-reg','bar',{labels:regsR,
+    datasets:['Alta Probabilidade','Média Probabilidade','Necessidade de Apoio à Informatização'].map(t=>({label:t,
+      data:regsR.map(r=>tByR[r][t]||0),
+      backgroundColor:(TC[t]||'#888')+'88',borderColor:TC[t]||'#888',borderWidth:1.5,borderRadius:3}))},{
+    plugins:{legend:{position:'bottom',labels:{boxWidth:8,font:{size:9}}},
+      datalabels:{display:true,anchor:'center',align:'center',color:'#fff',font:{weight:'bold',size:9},formatter:v=>v>0?v:''}},
+    scales:{x:{stacked:true},y:{stacked:true,ticks:{callback:v=>fmt(v)}}}});
+
+  // Gap pontos — static
+  const gaps=[{l:'Hospital Conv.',g:98.8,c:true},{l:'Hospital Público',g:92.3,c:true},
+    {l:'Urgência/PS',g:88.9,c:true},{l:'UPA',g:84.1,c:true},{l:'Exames/Lab',g:83.7,c:false},
+    {l:'CEO',g:80.3,c:false},{l:'Espec. Pública',g:79.0,c:true},{l:'CAPS',g:76.4,c:false},{l:'Outras UBS',g:20.1,c:false}]
+    .sort((a,b)=>b.g-a.g);
+  const gc=gaps.map(g=>g.c?'#f59e0b':'#0ea5e9');
+  mkC('c-gap-pts','bar',{labels:gaps.map(g=>g.l+(g.c?' ⚠':'')),
+    datasets:[{data:gaps.map(g=>g.g),backgroundColor:gc.map(c=>c+'99'),borderColor:gc,borderWidth:1.5,borderRadius:4}]},{
+    indexAxis:'y',plugins:{legend:{display:false},
+      datalabels:{display:true,anchor:'end',align:'right',color:'#fff',font:{weight:'bold',size:10},formatter:v=>v+'%'}},
+    scales:{x:{min:0,max:115,display:false}}});
+}
+
+function renderOpp(baseData) {
+  const src=baseData||getFiltered();
+  const rf=document.getElementById('opp-reg').value;
+  const tf=document.getElementById('opp-tier').value;
+  const fil=src.filter(m=>(!rf||m.regiao===rf)&&(!tf||m.tier===tf))
+              .sort((a,b)=>b.opp-a.opp).slice(0,100);
+  document.getElementById('opp-cnt').textContent=fil.length+' municípios';
+
+  document.getElementById('t-opp-body').innerHTML=fil.map((m,i)=>{
+    const sc=m.opp,scC=sc>=65?'#f43f5e':sc>=50?'#f59e0b':'#0ea5e9';
+    return '<tr>'+
+      '<td style="color:var(--muted);font-size:.67rem">'+(i+1)+'</td>'+
+      '<td><strong style="font-size:.73rem">'+m.municipio+'</strong><br><span style="color:var(--muted);font-size:.6rem">'+m.uf+' · '+m.regiao+'</span></td>'+
+      '<td><div style="font-size:1rem;font-weight:800;color:'+scC+'">'+sc+'</div><div class="pw"><div class="pw2" style="width:'+sc+'%;background:'+scC+'"></div></div></td>'+
+      '<td><span style="color:'+(TC[m.tier]||'#888')+';font-weight:700;font-size:.7rem">'+m.tier+'</span>'+
+        (m.tier_reason==='ncomp'?'<br><span style="font-size:.57rem;color:#f43f5e">⛔ não compartilha</span>':'')+'</td>'+
+
+      '<td style="text-align:center;font-weight:700">'+m.n_pep+'</td>'+
+      '<td style="text-align:center"><span style="color:#f59e0b;font-weight:800">'+m.n_sem_ic+'</span><br>'+
+        '<span style="font-size:.58rem;color:var(--muted)">'+(m.n_pep?Math.round(m.n_sem_ic/m.n_pep*100):0)+'% das PEP</span></td>'+
+      '<td><span class="pill '+(pil(m.pct_ic))+'">'+m.pct_ic+'%</span></td>'+
+      
+      '<td><span class="pill '+(pil(m.pct_inet))+'">'+m.pct_inet+'%</span></td>'+
+    '</tr>';
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════════
+// NAV + INIT
+// ══════════════════════════════════════════════════════════════════
+function showTab(id,btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nv button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active'); btn.classList.add('active');
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const params = new URLSearchParams(window.location.search);
+  const token  = params.get('token');
+
+  if (!token) {
+    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#fff;color:#1a2e6b;font-family:system-ui;flex-direction:column;gap:16px"><img src="data:image/png;base64,..." style="height:40px"><div style="font-size:1.1rem;font-weight:700">Acesso restrito</div><div style="font-size:.8rem;color:#5a6a8a">Solicite seu link de acesso à equipe Novetech</div></div>';
+    return;
+  }
+
+  const API = window.location.origin;
+
+  document.body.insertAdjacentHTML('afterbegin','<div id="loading" style="position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px"><div style="font-size:1rem;color:#1a2e6b;font-weight:600">Carregando dados...</div><div style="font-size:.7rem;color:#5a6a8a">Saúde Digital UBS · Novetech</div></div>');
+
+  Promise.all([
+    fetch(API+'/data/d?token='+token).then(function(r){ if(!r.ok) throw new Error('Token inválido'); return r.json(); }),
+    fetch(API+'/data/u?token='+token).then(function(r){ return r.json(); })
+  ]).then(function(results){
+    D   = results[0];
+    UBS = results[1];
+    document.getElementById('loading').remove();
+    initFilters();
+    refresh();
+    document.querySelector('.nv button').classList.add('active');
+  }).catch(function(err){
+    document.getElementById('loading').innerHTML = '<div style="font-size:2rem">⛔</div><div style="font-size:1rem;color:#e53935;font-weight:600">Acesso negado</div><div style="font-size:.75rem;color:#5a6a8a;margin-top:4px">Token inválido. Solicite um novo link à equipe Novetech.</div>';
+  });
+});
+
+</script>
+</body>
+</html></script>
+</body>
+</html>
